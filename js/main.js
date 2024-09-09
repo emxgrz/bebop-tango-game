@@ -1,6 +1,10 @@
-const pantallaInicio = document.getElementById("pantalla-inicio");
+const pantallaInicio = document.querySelector("#pantalla-inicio");
+const pantallaBatalla = document.querySelector("#batalla")
+
 const player1Button = document.getElementById("player1Start");
 const player2Button = document.getElementById("player2Start");
+
+
 
 
 let player1Ready = false;
@@ -9,8 +13,8 @@ let player2Ready = false;
 
 function checkPlayersReady() {
   if (player1Ready && player2Ready) {
-    alert("Ahora debería cambiar de pantalla");
-  
+    pantallaInicio.style.display = "none"
+    pantallaBatalla.style.display = "flex"
   }
 }
 
