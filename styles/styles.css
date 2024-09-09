@@ -9,8 +9,7 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-#pantalla-inicio {
-  background-image: url(../images/fondo\ incio.gif);
+#pantalla-inicio, #batalla, #final {
   background-size: cover;
   width:80%;
   height: 80%;
@@ -22,6 +21,9 @@ body, html {
   align-items: center;
 }
 
+#pantalla-inicio {
+  background-image: url(../images/fondo\ incio.gif);
+}
 
 .logo {
   text-align: center;
@@ -90,18 +92,13 @@ button:hover {
 
 
 #batalla {
+  display: none;
   background-image: url(../images/fondo-batalla.png);
 }
 
 #final {
+  display: none;
   background-image: url(../images/fondo-final-mal.png);
 }
 
 
-#batalla, #final {
-  display: none;
-  width:80%;
-  height: 80%;
-  border: 2px solid black;
-  border-radius: 5px;
-}

@@ -1,4 +1,4 @@
-class SpikeSpiegel {
+class viciousRed {
   constructor() {
     this.x = 70;
     this.y = 60;
@@ -9,7 +9,7 @@ class SpikeSpiegel {
 
 
     this.node = document.createElement("img")
-    this.node.src = "./images/spike-buena.png" 
+    this.node.src = "./images/vicius-buena.png" 
     pantallaBatalla.append(this.node)
 
 
