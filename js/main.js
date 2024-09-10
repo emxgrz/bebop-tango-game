@@ -20,7 +20,7 @@ let player2Ready = false;
 
 let gameIntervalId;
 
-let bala;
+let bala = []
 
 //FUNCIONES PRINCIPALES
 player1Button.onclick = function () {
@@ -51,16 +51,25 @@ function startGame() {
   plataforma = new barra();
 
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
+
+  if (spike) {
+    disparar(spike)
+} 
+
+if(vicious) {
+  disparar(vicious)
+}
+
 }
 
 
-
+//--------gameLoop
 function gameLoop() {
   if (spike) {
-    spike.moveX();
+    spike.moveX()
   }
   if (vicious) {
-    vicious.moveX();
+    vicious.moveX()
 
   }
 
@@ -71,6 +80,23 @@ function gameLoop() {
   if (vicious.isJumping && (vicious.y+vicious.h) < plataforma.y) {
     vicious.gravity()
   }
+
+  bala.forEach((proyectil, index) => {
+    proyectil.move();
+    if (proyectil.balaPerdida()) {
+      proyectil.node.remove()
+      bala.splice(index, 1)
+    } else {
+      if (detectarColisionBalaSpike(proyectil, spike)) {
+        proyectil.node.remove();
+        bala.splice(index, 1);
+      }
+      if (detectarColisionBalaVicious(proyectil, vicious)) {
+        proyectil.node.remove()
+        bala.splice(index, 1)
+      }
+    }
+  })
 }
 
 //EVENT LISTENERS
@@ -80,16 +106,17 @@ document.addEventListener("keydown", (event) => {
   if (key === "j") {
     //izquierda
     spike.speedX = 5
-    spike.directionX = -1;
+    spike.directionX = -1
 
   } else if (key === "l") {
     // derecha
-    spike.speedX = 5;
-    spike.directionX = 1;
+    spike.speedX = 5
+    spike.directionX = 1
 
   } else if (key === "i") {
     // salta
     spike.jump()
+  
 
   } else if (key === "a") {
     vicious.speedX = 5
@@ -102,7 +129,8 @@ document.addEventListener("keydown", (event) => {
   } else if (key === "w") {
     vicious.jump()
   }
-});
+
+})
 
 document.addEventListener("keyup", (event) => {
   const key = event.key;
@@ -115,7 +143,24 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+
+  if (key === "k") {
+    disparar(spike);  
+  } else if (key === "s") {
+    disparar(vicious); 
+  }
+});
+
+
 //crear detección de colisión
+function disparar(player) {
+  // proyectil a partir de la posición del jugador
+  const proyectil = new Proyectil(player.x + player.w / 2, player.y + player.h / 2, player.directionX || 1);
+  bala.push(proyectil);  // proyectil en array para que se actualice en el gameLoop
+}
+
 
 
 function detectarColisionBalaSpike(balazo) {
@@ -124,6 +169,16 @@ function detectarColisionBalaSpike(balazo) {
     spike.x + spike.w > balazo.x &&
     spike.y < balazo.y + balazo.h &&
     spike.y + spike.h > balazo.y
+  ) {
+  }
+}
+
+function detectarColisionBalaVicious(balazo) {
+  if (
+    vicious.x < balazo.x + balazo.w &&
+    vicious.x + vicious.w > balazo.x &&
+    vicious.y < balazo.y + balazo.h &&
+    vicious.y + vicious.h > balazo.y
   ) {
   }
 }
