@@ -17,11 +17,14 @@ let imagen2 = document.getElementById("imgp2")
 // VARIABLES
 let spike = null
 let vicious = null
+let plataforma = null
 
 let player1Ready = false
 let player2Ready = false
 
 let gameIntervalId
+
+let bala
 
 
 
@@ -52,6 +55,7 @@ function preparadosListos() {
 function startGame () {
   spike = new SpikeSpiegel()
   vicious = new viciousRed()
+  plataforma = new barra()
 
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60))
 
@@ -118,6 +122,25 @@ document.addEventListener('keyup', (event) => {
 
 
 //crear detección de colisión
+function detectarColisionBalaSpike() {
+  bala.forEach((balazo) => {
+
+    if(
+      spike.x < balazo.x + balazo.w &&
+      spike.x + spike.w > balazo.x &&
+      spike.y < balazo.y + balazo.h &&
+      spike.y + spike.h > balazo.y
+    ) {
+      
+    }
+  
+  })
+
+
+
+
+}
+
 
 
 // crear fución que pase al gameover

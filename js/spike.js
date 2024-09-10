@@ -1,9 +1,9 @@
 class SpikeSpiegel {
   constructor() {
-    this.x = 50;
-    this.y = 60;
-    this.h = 40;
-    this.w = 45;
+    this.x = 800;
+    this.y = 200;
+    this.h = 350;
+    this.w = 250;
     this.gravitySpeed = 1.5
     this.jumpSpeed = 25;
     this.speedX = 0
