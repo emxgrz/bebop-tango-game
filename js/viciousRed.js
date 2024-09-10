@@ -1,11 +1,11 @@
 class viciousRed {
   constructor() {
     this.x = 380
-    this.y = 200
-    this.h = 350
-    this.w = 250;
-    this.gravitySpeed = 1.5
-    this.jumpSpeed = 25
+    this.y = 300
+    this.h = 250
+    this.w = 170;
+    this.gravitySpeed = 4.5
+    this.jumpSpeed = 150
     this.speedX = 0
     this.directionX = 0
 
@@ -32,10 +32,17 @@ class viciousRed {
     this.node.style.left = `${this.x}px`
   }
 
+  gravity() {
+    this.y +=this.gravitySpeed
+    this.node.style.top = `${this.y}px`
+  }
 
+  
     jump() {
       this.y -= this.jumpSpeed
       this.node.style.top = `${this.y}px`
+      this.isJumping=true
+
     }
 
 }
