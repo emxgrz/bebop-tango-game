@@ -87,7 +87,7 @@ button img {
 }
 
 button:hover {
-  background-color: lightgreen;
+  background-color: rgb(255, 215, 246);
 
 }
 
@@ -102,4 +102,8 @@ button:hover {
   background-image: url(../images/fondo-final-mal.png);
 }
 
+#restart img {
+  width: 110px;
+  height: 50px;
+}
 

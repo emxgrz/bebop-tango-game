@@ -17,5 +17,9 @@ class barra {
     this.node.style.top = `${this.y}px`
     this.node.style.left = `${this.x}px`
   }
+
+  remove() {
+    this.node.remove()
+  }
 }
 

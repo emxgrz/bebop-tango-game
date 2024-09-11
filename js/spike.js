@@ -41,7 +41,9 @@ class SpikeSpiegel {
       this.isJumping=true
     }
 
-    
+    remove() {
+      this.node.remove()
+    }
 
 
 

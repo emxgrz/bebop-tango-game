@@ -45,5 +45,9 @@ class viciousRed {
 
     }
 
+    remove() {
+      this.node.remove()
+    }
+
 }
 

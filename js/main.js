@@ -3,13 +3,15 @@
 const pantallaInicio = document.querySelector("#pantalla-inicio")
 const pantallaBatalla = document.querySelector("#batalla")
 const pantallaFinal = document.querySelector("#final")
-let plataforma = null;
+let plataforma = null
 
 //BOTONES
 const player1Button = document.getElementById("player1Start")
 const player2Button = document.getElementById("player2Start")
 let imagen1 = document.getElementById("imgp1")
 let imagen2 = document.getElementById("imgp2")
+
+let restart = document.getElementById("restart")
 
 // VARIABLES
 let spike = null
@@ -27,13 +29,13 @@ player1Button.onclick = function () {
   player1Ready = true
   imagen1.src = "./images/ready.png"
   preparadosListos()
-};
+}
 
 player2Button.onclick = function () {
   player2Ready = true
   imagen2.src = "./images/ready.png"
   preparadosListos()
-};
+}
 
 //-----Función para ver si ambos jugadores están listos
 function preparadosListos() {
@@ -85,14 +87,17 @@ function gameLoop() {
     if (detectarColisionBalaSpike(proyectil)) {
         proyectil.remove()
         bala.splice(index, 1)
+        gameOver()
         return
       }
     if (detectarColisionBalaVicious(proyectil)) {
         proyectil.remove()
         bala.splice(index, 1)
+        gameOver()
         return
       }
   })
+
 }
 
 //EVENT LISTENERS
@@ -155,28 +160,25 @@ function disparar(player) {
  
     let initialX;
   
-    // Ajusta la posición inicial del proyectil basado en la dirección
+    
     if (player.directionX === 1) {
-      // Si el jugador está mirando hacia la derecha
-      initialX = player.x + player.w; // Posiciona el proyectil a la derecha del jugador
+      // jugador mirando hacia la derecha:
+      initialX = player.x + player.w // proyectil a la derecha del jugador
     } else if (player.directionX === -1) {
-      // Si el jugador está mirando hacia la izquierda
-      initialX = player.x - 20; // Posiciona el proyectil a la izquierda del jugador
+      // jugador está hacia la izquierda
+      initialX = player.x - 20  // proyectil a la izquierda del jugador
     } else {
       // Si el jugador no está moviéndose horizontalmente (dirección desconocida)
-      initialX = player.x + player.w; // Default a la derecha
+      initialX = player.x + player.w // Default a la derecha
     }
   
     const proyectil = new Proyectil(initialX, player.y + player.h / 2.7, player.directionX);
-    bala.push(proyectil); // Añade el proyectil al array para ser actualizado en el gameLoop
+    bala.push(proyectil) // actualizado array bala
   
-  
-  // // proyectil a partir de la posición del jugador 
-  // const proyectil = new Proyectil(player.x + player.w, player.y + player.h / 2.7, player.directionX || 1) //que el proyectil salga de la mitad x del personaje y por el eje y por mitad del torso aprox
-  // bala.push(proyectil);  // proyectil en array para que se actualice en el gameLoop
 }
 
 
+// coliciones
 
 function detectarColisionBalaSpike(proyectil) {
   return (
@@ -197,7 +199,75 @@ function detectarColisionBalaVicious(proyectil) {
   ) 
 }
 
-// crear fución que pase al gameover
+// gameover
+function gameOver() {
+  pantallaBatalla.style.display = "none"
+  pantallaFinal.style.display = "flex"
+
+}
+
+
+// reiniciar el juego
+
+restart.onclick = function () {
+  restartGame()
+}
+
+function restartGame() {
+
+    if (gameIntervalId) {
+      clearInterval(gameIntervalId)
+      gameIntervalId = null
+    }
+  
+    // eliminar la pantalla
+    while (pantallaBatalla.firstChild) {
+      pantallaBatalla.removeChild(pantallaBatalla.firstChild);
+    }
+  
+
+    spike = null
+    vicious = null
+    player1Ready = false
+    player2Ready = false
+    imagen1.src = "./images/playerOne.png"
+    imagen2.src = "./images/playerTwo.png"
+    bala = []
+  
+    // pantalla aparece
+    pantallaInicio.style.display = 'flex';
+    pantallaBatalla.style.display = 'none';
+    pantallaFinal.style.display = 'none';
+  
+    // reiniciar botones
+    player1Button.onclick = function () {
+      player1Ready = true;
+      imagen1.src = "./images/ready.png";
+      preparadosListos();
+    };
+  
+    player2Button.onclick = function () {
+      player2Ready = true;
+      imagen2.src = "./images/ready.png";
+      preparadosListos();
+    };
+  
+
+  }
+  
+  function startGame() {
+    // nuevos personajes y plataforma
+    spike = new SpikeSpiegel();
+    vicious = new viciousRed();
+    plataforma = new barra();
+  
+   
+    gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
+  
+  
+
+}
+
 
 
 //EXTRAS;
