@@ -3,6 +3,8 @@
 const pantallaInicio = document.querySelector("#pantalla-inicio")
 const pantallaBatalla = document.querySelector("#batalla")
 const pantallaFinal = document.querySelector("#final")
+const spikeLifeBarNode = document.querySelector("#spikeLifeBar")
+const viciousLifeBarNode = document.querySelector("#viciousLifeBar")
 let plataforma = null
 
 //BOTONES
@@ -23,6 +25,12 @@ let player2Ready = false
 let gameIntervalId
 
 let bala = []
+
+
+//BONUS VIDA
+let maxHealth = 100
+let spikeHealth = maxHealth
+let viciousHealth = maxHealth
 
 //FUNCIONES PRINCIPALES
 player1Button.onclick = function () {
@@ -87,13 +95,13 @@ function gameLoop() {
     if (detectarColisionBalaSpike(proyectil)) {
         proyectil.remove()
         bala.splice(index, 1)
-        gameOver()
+        // gameOver()
         return
       }
     if (detectarColisionBalaVicious(proyectil)) {
         proyectil.remove()
         bala.splice(index, 1)
-        gameOver()
+        // gameOver()
         return
       }
   })
@@ -102,7 +110,7 @@ function gameLoop() {
 
 //EVENT LISTENERS
 document.addEventListener("keydown", (event) => {
-  const key = event.key;
+  const key = event.key
 
   if (key === "j") {
     //izquierda
@@ -178,25 +186,67 @@ function disparar(player) {
 }
 
 
-// coliciones
+// FUNCIÓN BONUS --- restar vida
+function updateSpikeLifeBar() {
+  let lifePercentage = (spikeHealth / maxHealth) * 100
+  spikeLifeBarNode.style.width = `${lifePercentage}%`
+}
+
+function updateViciousLifeBar() {
+  let lifePercentage = (viciousHealth / maxHealth) * 100
+  viciousLifeBarNode.style.width = `${lifePercentage}%`
+}
+
+function spikeTakesDamage(damage) {
+  spikeHealth -= damage
+  if (spikeHealth < 0) spikeHealth = 0
+  updateSpikeLifeBar() 
+
+  if (spikeHealth === 0) {
+    gameOver()
+  }
+}
+
+function viciousTakesDamage(damage) {
+  viciousHealth -= damage
+  if (viciousHealth < 0) viciousHealth = 0
+  updateViciousLifeBar()
+
+  if (viciousHealth === 0) {
+    gameOver()
+  }
+}
+
+
+
+
+// colisiones
 
 function detectarColisionBalaSpike(proyectil) {
-  return (
+  if (
     spike.x < proyectil.x + proyectil.w &&
     spike.x + spike.w > proyectil.x &&
     spike.y < proyectil.y + proyectil.h &&
     spike.y + spike.h > proyectil.y
-  ) 
+  ) {
+    spikeTakesDamage(10)
+    return true
+  }
+  return false
 }
 
 
 function detectarColisionBalaVicious(proyectil) {
-  return (
+  if (
     vicious.x < proyectil.x + proyectil.w &&
     vicious.x + vicious.w > proyectil.x &&
     vicious.y < proyectil.y + proyectil.h &&
     vicious.y + vicious.h > proyectil.y
-  ) 
+  ) {
+    viciousTakesDamage(10)
+    return true
+  }
+  return false
 }
 
 // gameover
@@ -234,35 +284,53 @@ function restartGame() {
     imagen2.src = "./images/playerTwo.png"
     bala = []
   
+   
+    
+
+    spikeHealth = maxHealth
+    viciousHealth = maxHealth
+
+    updateSpikeLifeBar()
+    
+    updateViciousLifeBar()
+
+    spikeTakesDamage(10)
+    
+    viciousTakesDamage(10) 
+     
+
+
+
+
     // pantalla aparece
-    pantallaInicio.style.display = 'flex';
-    pantallaBatalla.style.display = 'none';
-    pantallaFinal.style.display = 'none';
+    pantallaInicio.style.display = 'flex'
+    pantallaBatalla.style.display = 'none'
+    pantallaFinal.style.display = 'none'
   
     // reiniciar botones
     player1Button.onclick = function () {
-      player1Ready = true;
-      imagen1.src = "./images/ready.png";
-      preparadosListos();
+      player1Ready = true
+      imagen1.src = "./images/ready.png"
+      preparadosListos()
     };
   
     player2Button.onclick = function () {
-      player2Ready = true;
-      imagen2.src = "./images/ready.png";
-      preparadosListos();
-    };
+      player2Ready = true
+      imagen2.src = "./images/ready.png"
+      preparadosListos()
+    }
   
 
   }
   
   function startGame() {
     // nuevos personajes y plataforma
-    spike = new SpikeSpiegel();
-    vicious = new viciousRed();
-    plataforma = new barra();
+    spike = new SpikeSpiegel()
+    vicious = new viciousRed()
+    plataforma = new barra()
   
    
-    gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
+    gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60))
   
   
 

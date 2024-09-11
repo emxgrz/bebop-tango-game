@@ -7,6 +7,7 @@ body, html {
   justify-content: center;
   align-items: center;
   font-family: Arial, sans-serif;
+  background-image: url("../images/fondoEstrellas.png");
 }
 
 #pantalla-inicio, #batalla, #final {
@@ -61,7 +62,8 @@ body, html {
   border: 2px solid #000;
   border-radius: 15px;
   padding: 20px;
-  background-color: #fafafa78;
+  background-color: #aba6a65b;
+  
 }
 
 
@@ -96,6 +98,57 @@ button:hover {
   display: none;
   background-image: url(../images/fondo-batalla.png);
 }
+
+#spikeLifeBarCont {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 200px;
+  height: 20px;
+  background-color: #b9b9b9;
+  border: 2px solid #5e5e5e;
+  border-radius: 10px;
+}
+
+
+#spikeLifeBar {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(61, 184, 233);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+#viciousLifeBarContainer {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 200px;
+  height: 20px;
+  background-color: #b9b9b9;
+  border: 2px solid #5e5e5e;
+  border-radius: 10px;
+}
+
+#viciousLifeBar {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(230, 83, 237); 
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+
+#viciousLifeBar span {
+  font-family: fantasy;
+}
+
+#spikeLifeBar span {
+  font-family: fantasy;
+}
+
 
 #final {
   display: none;

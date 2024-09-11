@@ -4,7 +4,7 @@ class viciousRed {
     this.y = 300
     this.h = 250
     this.w = 170;
-    this.gravitySpeed = 4.5
+    this.gravitySpeed = 7
     this.jumpSpeed = 150
     this.speedX = 0
     this.directionX = 0
