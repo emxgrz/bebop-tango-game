@@ -23,6 +23,7 @@ body, html {
 
 #pantalla-inicio {
   background-image: url(../images/fondo\ incio.gif);
+  padding-bottom: 100px;
 }
 
 .logo {

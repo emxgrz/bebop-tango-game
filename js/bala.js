@@ -24,7 +24,11 @@ class Proyectil {
 
  
   balaPerdida() {
-    this.x < 0 || this.x > window.innerWidth
+    return this.x < 0 || this.x > window.innerWidth
+  }
+
+  remove() {
+    this.node.remove()
   }
 }
 

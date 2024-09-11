@@ -1,9 +1,9 @@
 class barra {
   constructor() {
-    this.x = 200;
-    this.y = 530;
-    this.h = 50;
-    this.w = 1100;
+    this.x = 200
+    this.y = 530
+    this.h = 50
+    this.w = 1100
     
 
     this.node = document.createElement("img")
