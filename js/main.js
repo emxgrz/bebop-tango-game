@@ -1,8 +1,12 @@
 const pantallaInicio = document.querySelector("#pantalla-inicio");
 const pantallaBatalla = document.querySelector("#batalla");
 const pantallaFinal = document.querySelector("#final");
+
 const spikeLifeBarNode = document.querySelector("#spikeLifeBar");
 const viciousLifeBarNode = document.querySelector("#viciousLifeBar");
+const lifeBarContainerVicious = document.querySelector("#viciousLifeBarContainer")
+const lifeBarContainerSpike = document.querySelector("#spikeLifeBarCont")
+
 let plataforma = null;
 
 const logo = document.querySelector("#logo");
@@ -307,10 +311,20 @@ function restartGame() {
   bala = [];
 
 
+//   const lifeBarContainerVicious = document.querySelector("#viciousLifeBarContainer")
+// const lifeBarContainerSpike = document.querySelector("#spikeLifeBarContainer")
+
   spikeHealth = maxHealth;
   viciousHealth = maxHealth;
-  pantallaBatalla.appendChild(spikeLifeBarNode);
-  pantallaBatalla.appendChild(viciousLifeBarNode);
+
+  console.log(lifeBarContainerSpike)
+  console.log(lifeBarContainerVicious)
+  lifeBarContainerSpike.appendChild(spikeLifeBarNode);
+  lifeBarContainerVicious.appendChild(viciousLifeBarNode);
+
+
+  pantallaBatalla.appendChild(lifeBarContainerSpike)
+  pantallaBatalla.appendChild(lifeBarContainerVicious)
 
   updateSpikeLifeBar();
   updateViciousLifeBar();
