@@ -45,6 +45,9 @@ class SpikeSpiegel {
       this.node.remove()
     }
 
+    changeImage(src) {
+      this.node.src = src;
+    }
 
 
 }

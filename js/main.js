@@ -5,19 +5,20 @@ const spikeLifeBarNode = document.querySelector("#spikeLifeBar");
 const viciousLifeBarNode = document.querySelector("#viciousLifeBar");
 let plataforma = null;
 
-const logo = document.querySelector("#logo")
-
+const logo = document.querySelector("#logo");
 
 //AUDIO
 const cancionInicio = document.querySelector("#chickenBone");
 const cancionBatalla = document.querySelector("#tank");
 const cancionFinal = document.querySelector("#theRealFolk");
+const disparo = new Audio("./images/audio/bala.mp3");
+const sonidoBoton = new Audio("./images/audio/button-sound.mp3");
 
 cancionInicio.volume = 0.1;
 cancionBatalla.volume = 0.1;
 cancionFinal.volume = 0.1;
-
-
+disparo.volume = 0.03;
+sonidoBoton.volume = 0.07;
 
 //BOTONES
 const player1Button = document.getElementById("player1Start");
@@ -43,26 +44,24 @@ let maxHealth = 100;
 let spikeHealth = maxHealth;
 let viciousHealth = maxHealth;
 
-
 logo.onclick = function () {
-  cancionInicio.play()
-}
+  cancionInicio.play();
+};
 
 //FUNCIONES PRINCIPALES
 player1Button.onclick = function () {
+  sonidoBoton.play();
   player1Ready = true;
   imagen1.src = "./images/ready.png";
   preparadosListos();
 };
 
 player2Button.onclick = function () {
+  sonidoBoton.play();
   player2Ready = true;
   imagen2.src = "./images/ready.png";
   preparadosListos();
 };
-
-
-
 
 //-----Función para ver si ambos jugadores están listos
 function preparadosListos() {
@@ -193,6 +192,21 @@ function disparar(player) {
     player.directionX
   );
   bala.push(proyectil); // actualizado array bala
+  disparo.play();
+
+  if (player instanceof SpikeSpiegel) {
+    player.changeImage("./images/spike-shooting.png");
+
+    setTimeout(() => {
+      player.changeImage("./images/spike-buena.png");
+    }, 350);
+  } else if (player instanceof viciousRed) {
+    player.changeImage("./images/vicious-side.png");
+
+    setTimeout(() => {
+      player.changeImage("./images/vicius-buena.png");
+    }, 350);
+  }
 }
 
 // FUNCIÓN BONUS --- restar vida
@@ -266,6 +280,7 @@ function gameOver() {
 // reiniciar el juego
 
 restart.onclick = function () {
+  sonidoBoton.play();
   restartGame();
 };
 
@@ -291,12 +306,17 @@ function restartGame() {
   imagen2.src = "./images/playerTwo.png";
   bala = [];
 
+
   spikeHealth = maxHealth;
   viciousHealth = maxHealth;
+  pantallaBatalla.appendChild(spikeLifeBarNode);
+  pantallaBatalla.appendChild(viciousLifeBarNode);
 
   updateSpikeLifeBar();
-
   updateViciousLifeBar();
+
+ 
+
 
   // pantalla aparece
   pantallaInicio.style.display = "flex";
@@ -305,33 +325,19 @@ function restartGame() {
 
   // reiniciar botones
   player1Button.onclick = function () {
+    sonidoBoton.play()
     player1Ready = true;
     imagen1.src = "./images/ready.png";
     preparadosListos();
   };
 
   player2Button.onclick = function () {
+    sonidoBoton.play()
     player2Ready = true;
     imagen2.src = "./images/ready.png";
     preparadosListos();
   };
 }
 
-// function startGame() {
-//   // nuevos personajes y plataforma
-//   cancionInicio.pause()
-//   cancionBatalla.play()
-//   spike = new SpikeSpiegel()
-//   vicious = new viciousRed()
-//   plataforma = new barra()
 
-//   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60))
 
-//EXTRAS;
-// --Crear puntuación (entonces no ganaría quien primero dispare al otro, si no a la de tres o algo así)
-// --Si spike gameIntervalId, que pase a un final, y si vicious , que pase a otro.
-// Pegar patadas (necesitaría movimiento de la pierna)
-//Poner música
-//botones on and off de música
-// diferentes enemigos, el último sería vicious. Cambiar el nombre de la clase y crear extensiones
-//

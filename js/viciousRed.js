@@ -48,5 +48,8 @@ class viciousRed {
     remove() {
       this.node.remove()
     }
-
+    
+    changeImage(src) {
+      this.node.src = src;
+    }
 }
