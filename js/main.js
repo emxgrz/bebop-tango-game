@@ -5,6 +5,8 @@ const spikeLifeBarNode = document.querySelector("#spikeLifeBar");
 const viciousLifeBarNode = document.querySelector("#viciousLifeBar");
 let plataforma = null;
 
+const logo = document.querySelector("#logo")
+
 
 //AUDIO
 const cancionInicio = document.querySelector("#chickenBone");
@@ -42,11 +44,12 @@ let spikeHealth = maxHealth;
 let viciousHealth = maxHealth;
 
 
-cancionInicio.play()
+logo.onclick = function () {
+  cancionInicio.play()
+}
 
 //FUNCIONES PRINCIPALES
 player1Button.onclick = function () {
-
   player1Ready = true;
   imagen1.src = "./images/ready.png";
   preparadosListos();
@@ -57,6 +60,7 @@ player2Button.onclick = function () {
   imagen2.src = "./images/ready.png";
   preparadosListos();
 };
+
 
 
 
