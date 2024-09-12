@@ -1,11 +1,20 @@
-//ELEMENTOS PRINCIPALES DEL DOM
-
 const pantallaInicio = document.querySelector("#pantalla-inicio")
 const pantallaBatalla = document.querySelector("#batalla")
 const pantallaFinal = document.querySelector("#final")
 const spikeLifeBarNode = document.querySelector("#spikeLifeBar")
 const viciousLifeBarNode = document.querySelector("#viciousLifeBar")
 let plataforma = null
+
+//AUDIO
+const cancionInicio = document.querySelector("#chickenBone")
+const cancionBatalla = document.querySelector("#tank")
+const cancionFinal = document.querySelector("#theRealFolk")
+
+cancionInicio.volume = 0.1
+cancionBatalla.volume = 0.1
+cancionFinal.volume = 0.1
+
+
 
 //BOTONES
 const player1Button = document.getElementById("player1Start")
@@ -32,6 +41,11 @@ let maxHealth = 100
 let spikeHealth = maxHealth
 let viciousHealth = maxHealth
 
+if (pantallaInicio) {
+  cancionInicio.play()
+}
+
+
 //FUNCIONES PRINCIPALES
 player1Button.onclick = function () {
   player1Ready = true
@@ -50,6 +64,9 @@ function preparadosListos() {
   if (player1Ready && player2Ready) {
     pantallaInicio.style.display = "none"
     pantallaBatalla.style.display = "flex"
+    cancionInicio.pause()
+    cancionInicio.currentTime = 0
+    cancionBatalla.play()
     startGame()
   }
 }
@@ -59,6 +76,7 @@ function startGame() {
   spike = new SpikeSpiegel()
   vicious = new viciousRed()
   plataforma = new barra()
+  
 
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60))
 
@@ -253,6 +271,9 @@ function detectarColisionBalaVicious(proyectil) {
 function gameOver() {
   pantallaBatalla.style.display = "none"
   pantallaFinal.style.display = "flex"
+  cancionBatalla.pause()
+  cancionBatalla.currentTime = 0
+  cancionFinal.play()
 
 }
 
@@ -275,7 +296,9 @@ function restartGame() {
       pantallaBatalla.removeChild(pantallaBatalla.firstChild);
     }
   
-
+    cancionFinal.pause()
+    cancionFinal.currentTime = 0
+    cancionInicio.play()
     spike = null
     vicious = null
     player1Ready = false
@@ -325,6 +348,8 @@ function restartGame() {
   
   function startGame() {
     // nuevos personajes y plataforma
+    cancionInicio.pause()
+    cancionBatalla.play()
     spike = new SpikeSpiegel()
     vicious = new viciousRed()
     plataforma = new barra()

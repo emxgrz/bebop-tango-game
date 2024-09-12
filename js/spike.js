@@ -4,8 +4,8 @@ class SpikeSpiegel {
     this.y = 290;
     this.h = 250;
     this.w = 150;
-    this.gravitySpeed = 7
-    this.jumpSpeed = 150
+    this.gravitySpeed = 7.5
+    this.jumpSpeed = 200
     this.speedX = 0
     this.directionX = 0 //uno o -1, derecha izq
     this.velocityY = 0
@@ -48,4 +48,3 @@ class SpikeSpiegel {
 
 
 }
-
