@@ -43,6 +43,7 @@ body, html {
 .instrucciones p {
   font-size: 1 rem;
   line-height: 1.5;
+  font-family: monospace;
 }
 
 .players {

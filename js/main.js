@@ -4,8 +4,10 @@ const pantallaFinal = document.querySelector("#final");
 
 const spikeLifeBarNode = document.querySelector("#spikeLifeBar");
 const viciousLifeBarNode = document.querySelector("#viciousLifeBar");
-const lifeBarContainerVicious = document.querySelector("#viciousLifeBarContainer")
-const lifeBarContainerSpike = document.querySelector("#spikeLifeBarCont")
+const lifeBarContainerVicious = document.querySelector(
+  "#viciousLifeBarContainer"
+);
+const lifeBarContainerSpike = document.querySelector("#spikeLifeBarCont");
 
 let plataforma = null;
 
@@ -22,7 +24,7 @@ cancionInicio.volume = 0.1;
 cancionBatalla.volume = 0.1;
 cancionFinal.volume = 0.1;
 disparo.volume = 0.03;
-sonidoBoton.volume = 0.07;
+sonidoBoton.volume = 0.1;
 
 //BOTONES
 const player1Button = document.getElementById("player1Start");
@@ -101,8 +103,22 @@ function gameLoop() {
     spike.gravity();
   }
 
+  if (
+    spike.x > plataforma.x + plataforma.w ||
+    spike.x + spike.w < plataforma.x
+  ) {
+    gameOver(); // Spike cae, game over
+  }
+
   if (vicious.isJumping && vicious.y + vicious.h < plataforma.y) {
     vicious.gravity();
+  }
+
+  if (
+    vicious.x > plataforma.x + plataforma.w ||
+    vicious.x + vicious.w < plataforma.x
+  ) {
+    gameOver(); // Vicious cae fuera de la plataforma
   }
 
   bala.forEach((proyectil, index) => {
@@ -224,13 +240,19 @@ function updateViciousLifeBar() {
   viciousLifeBarNode.style.width = `${lifePercentage}%`;
 }
 
+// Restar daño, cambiar imagen si mueren
+
 function spikeTakesDamage(damage) {
   spikeHealth -= damage;
   if (spikeHealth < 0) spikeHealth = 0;
   updateSpikeLifeBar();
 
   if (spikeHealth === 0) {
-    gameOver();
+    spike.changeImage("./images/spike-dead.png");
+
+    setTimeout(() => {
+      gameOver();
+    }, 2000);
   }
 }
 
@@ -240,7 +262,11 @@ function viciousTakesDamage(damage) {
   updateViciousLifeBar();
 
   if (viciousHealth === 0) {
-    gameOver();
+    vicious.changeImage("./images/vicius-dead.png");
+
+    setTimeout(() => {
+      gameOver();
+    }, 2000);
   }
 }
 
@@ -310,27 +336,17 @@ function restartGame() {
   imagen2.src = "./images/playerTwo.png";
   bala = [];
 
-
-//   const lifeBarContainerVicious = document.querySelector("#viciousLifeBarContainer")
-// const lifeBarContainerSpike = document.querySelector("#spikeLifeBarContainer")
-
   spikeHealth = maxHealth;
   viciousHealth = maxHealth;
 
-  console.log(lifeBarContainerSpike)
-  console.log(lifeBarContainerVicious)
   lifeBarContainerSpike.appendChild(spikeLifeBarNode);
   lifeBarContainerVicious.appendChild(viciousLifeBarNode);
 
-
-  pantallaBatalla.appendChild(lifeBarContainerSpike)
-  pantallaBatalla.appendChild(lifeBarContainerVicious)
+  pantallaBatalla.appendChild(lifeBarContainerSpike);
+  pantallaBatalla.appendChild(lifeBarContainerVicious);
 
   updateSpikeLifeBar();
   updateViciousLifeBar();
-
- 
-
 
   // pantalla aparece
   pantallaInicio.style.display = "flex";
@@ -339,19 +355,16 @@ function restartGame() {
 
   // reiniciar botones
   player1Button.onclick = function () {
-    sonidoBoton.play()
+    sonidoBoton.play();
     player1Ready = true;
     imagen1.src = "./images/ready.png";
     preparadosListos();
   };
 
   player2Button.onclick = function () {
-    sonidoBoton.play()
+    sonidoBoton.play();
     player2Ready = true;
     imagen2.src = "./images/ready.png";
     preparadosListos();
   };
 }
-
-
-
